@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React from 'react';
+import MapSearch from './components/MapSearch';
 
 function App() {
-  const [count, setCount] = useState(0)
+  // .env ファイルから API キーを取得
+  const apiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+
+  if (!apiKey) {
+    return (
+      <div style={{ padding: '20px', color: 'red' }}>
+        <h1>エラー: APIキーが設定されていません</h1>
+        <p>.env ファイルに VITE_GOOGLE_MAPS_API_KEY を設定してください。</p>
+      </div>
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="App">
+      <h1 style={{ textAlign: 'center', padding: '10px' }}>🗺️ スポット検索マップ</h1>
+      {/* 以下のコンポーネントで全てのロジックを処理します */}
+      <MapSearch apiKey={apiKey} />
+    </div>
+  );
 }
 
-export default App
+export default App;
