@@ -28,6 +28,16 @@ export default function MapSearch({ apiKey }: MapSearchProps) {
   const [searchResults, setSearchResults] = useState<google.maps.places.PlaceResult[]>([]);
 
   // ----------------------------------------------------
+  // 新規追加: 選択されたスポットを保持するState
+  // ----------------------------------------------------
+  const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
+
+  // ----------------------------------------------------
+  // 新規追加: SearchBox のインスタンスを保持するための Ref
+  // ----------------------------------------------------
+  const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null);
+
+  // ----------------------------------------------------
   // A. Google Maps JS API のロード
   // ----------------------------------------------------
   const { isLoaded, loadError } = useJsApiLoader({
@@ -90,16 +100,6 @@ export default function MapSearch({ apiKey }: MapSearchProps) {
         }
     });
   };
-
-  // ----------------------------------------------------
-  // 新規追加: 選択されたスポットを保持するState
-  // ----------------------------------------------------
-  const [selectedPlace, setSelectedPlace] = useState<google.maps.places.PlaceResult | null>(null);
-
-  // ----------------------------------------------------
-  // 新規追加: SearchBox のインスタンスを保持するための Ref
-  // ----------------------------------------------------
-  const searchBoxRef = useRef<google.maps.places.SearchBox | null>(null);
 
   // ----------------------------------------------------
   // 💡 検索処理の修正: Autocomplete の候補選択時
